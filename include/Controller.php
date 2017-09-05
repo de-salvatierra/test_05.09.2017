@@ -28,7 +28,7 @@ class Controller
      * Action for create a new comment
      * @return string
      */
-    protected function newAction()
+    protected function newAction(): ?string
     {
         $nextMessageTimeout = $this->repository->nextMessageTimeout();
         if($nextMessageTimeout > 0) {
@@ -44,13 +44,14 @@ class Controller
         if(!$this->repository->save()) {
             return $this->sendJson(['error' => "Не удалось сохранить в файл"]);
         }
+        return null;
     }
 
     /**
      * Action for update comment message
      * @return string
      */
-    public function updateAction()
+    public function updateAction(): ?string
     {
         $message = $this->request->post('message');
         $updateMessage = intval($this->request->post('updateMessage'));
@@ -59,6 +60,7 @@ class Controller
         if(!$this->repository->update($message, $updateMessage)->save()) {
             return $this->sendJson(['error' => "Не удалось сохранить в файл"]);
         }
+        return null;
     }
     
     /**
